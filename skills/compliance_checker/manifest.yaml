@@ -1,0 +1,68 @@
+api_version: v2
+kind: Skill
+metadata:
+  name: compliance_checker
+  version: 1.0.0
+  display_name: 合规检查器
+  description: 基于可配置规则库进行GDPR、HIPAA等行业合规检查
+  author: kc-flow-team
+  tags: [compliance, gdpr, hipaa, regulation]
+  category: compliance
+
+inputs:
+  type: object
+  properties:
+    document_content:
+      type: string
+      description: 待检查的文档内容
+    compliance_frameworks:
+      type: array
+      items:
+        type: string
+        enum: [gdpr, hipaa, sox, pci_dss, iso27001]
+      description: 适用的合规框架
+    industry:
+      type: string
+      default: general
+    language:
+      type: string
+      default: zh-CN
+  required: [document_content, compliance_frameworks]
+
+outputs:
+  type: object
+  properties:
+    overall_compliance_score:
+      type: number
+      minimum: 0
+      maximum: 100
+    framework_results:
+      type: array
+      items:
+        type: object
+        properties:
+          framework: {type: string}
+          score: {type: number}
+          violations:
+            type: array
+            items:
+              type: object
+              properties:
+                rule_id: {type: string}
+                rule_name: {type: string}
+                severity: {type: string}
+                description: {type: string}
+                location: {type: string}
+                remediation: {type: string}
+
+runtime:
+  entry_point: handler.py::check
+  language: python
+  version: ">=3.11"
+  sandbox:
+    type: docker
+    memory_limit: 512MB
+    timeout_seconds: 600
+  dependencies:
+    - pydantic>=2.0.0
+    - pyyaml>=6.0

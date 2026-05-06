@@ -1,0 +1,36 @@
+# HIPAA合规规则
+rules:
+  - id: HIPAA-001
+    name: 受保护健康信息(PHI)保护
+    severity: critical
+    keywords: [病历, 诊断, 治疗方案, 医保, 健康信息, patient, diagnosis, treatment]
+    description: 所有PHI必须得到充分保护，防止未授权访问和泄露
+    remediation: 实施PHI访问控制和加密存储
+
+  - id: HIPAA-002
+    name: 最小必要原则
+    severity: high
+    keywords: [全部健康记录, 完整病历, 所有检查结果]
+    description: 使用和披露PHI应限于实现目的所需的最小必要范围
+    remediation: 按角色限制PHI访问范围
+
+  - id: HIPAA-003
+    name: 访问控制
+    severity: high
+    keywords: [共享账号, 默认密码, 公开访问]
+    description: 必须实施唯一的用户标识和紧急访问程序
+    remediation: 实施多因素认证和基于角色的访问控制
+
+  - id: HIPAA-004
+    name: 审计控制
+    severity: medium
+    keywords: [未记录, 无日志, 无追踪]
+    description: 必须记录和审查包含PHI的信息系统中的活动
+    remediation: 实施全面的审计日志系统
+
+  - id: HIPAA-005
+    name: 传输安全
+    severity: high
+    keywords: [HTTP, 明文传输, 未加密]
+    description: PHI在传输过程中必须加密
+    remediation: 所有PHI传输使用TLS 1.3加密

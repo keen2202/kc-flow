@@ -1,0 +1,43 @@
+# GDPR合规规则
+rules:
+  - id: GDPR-001
+    name: 数据最小化原则
+    severity: high
+    keywords: [个人信息, 个人数据, 身份证号, 手机号码, 家庭住址]
+    description: 收集的个人数据应限于处理目的所必需的最小范围
+    remediation: 审查数据收集范围，移除非必要的数据字段
+
+  - id: GDPR-002
+    name: 数据处理同意
+    severity: critical
+    keywords: [收集, 使用, 分享, 出售, 用户数据]
+    description: 处理个人数据需获得数据主体的明确同意
+    remediation: 添加明确的用户同意获取机制
+
+  - id: GDPR-003
+    name: 数据存储期限
+    severity: medium
+    keywords: [永久保存, 无限期, 长期存储, 数据保留]
+    description: 个人数据的存储期限不得超过实现处理目的所必需的时间
+    remediation: 明确数据存储期限和自动删除策略
+
+  - id: GDPR-004
+    name: 数据主体权利
+    severity: high
+    keywords: [删除, 修改, 导出, 查看, 用户数据]
+    description: 需提供数据访问、更正、删除、可携带等权利的实施机制
+    remediation: 实现用户数据管理API（查看/导出/删除）
+
+  - id: GDPR-005
+    name: 数据泄露通知
+    severity: critical
+    keywords: [数据泄露, 安全事件, 未授权访问, 数据丢失]
+    description: 发生数据泄露时需在72小时内通知监管机构
+    remediation: 建立数据泄露应急响应流程
+
+  - id: GDPR-006
+    name: 数据保护影响评估
+    severity: medium
+    keywords: [高风险处理, 大规模监控, 自动化决策, 敏感数据]
+    description: 高风险数据处理前需进行数据保护影响评估
+    remediation: 完成DPIA评估并归档

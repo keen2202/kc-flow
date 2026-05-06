@@ -1,0 +1,23 @@
+# 全局技能清单 (由 SkillScheduler 自动生成)
+# 最后更新: 2026-05-02
+
+skills:
+  - name: document_processor
+    version: 1.0.0
+    display_name: 文档处理器
+    category: document_processing
+    triggers: []
+
+  - name: risk_analyzer
+    version: 1.0.0
+    display_name: 风险分析器
+    category: risk_analysis
+    triggers:
+      - event: document.uploaded
+        condition: "file_type in ['pdf', 'docx']"
+
+  - name: compliance_checker
+    version: 1.0.0
+    display_name: 合规检查器
+    category: compliance
+    triggers: []

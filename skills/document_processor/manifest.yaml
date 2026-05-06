@@ -1,0 +1,77 @@
+api_version: v2
+kind: Skill
+metadata:
+  name: document_processor
+  version: 1.0.0
+  display_name: 文档处理器
+  description: 解析和处理多种格式的文档（PDF/Word/Excel），提取文本和结构化信息
+  author: kc-flow-team
+  tags: [document, parser, extraction]
+  category: document_processing
+
+inputs:
+  type: object
+  properties:
+    file_url:
+      type: string
+      description: 待处理文件的URL
+      format: uri
+    file_type:
+      type: string
+      enum: [pdf, docx, xlsx, txt, markdown]
+      description: 文件类型
+    extraction_mode:
+      type: string
+      enum: [full_text, structured, summary]
+      default: full_text
+    language:
+      type: string
+      default: zh-CN
+    max_pages:
+      type: integer
+      default: 100
+      description: 最大处理页数
+  required: [file_url, file_type]
+
+outputs:
+  type: object
+  properties:
+    content:
+      type: string
+      description: 提取的文本内容
+    metadata:
+      type: object
+      properties:
+        page_count:
+          type: integer
+        word_count:
+          type: integer
+        author:
+          type: string
+        created_at:
+          type: string
+    sections:
+      type: array
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+          content:
+            type: string
+          page:
+            type: integer
+
+runtime:
+  entry_point: handler.py::process
+  language: python
+  version: ">=3.11"
+  sandbox:
+    type: docker
+    memory_limit: 1GB
+    timeout_seconds: 600
+  dependencies:
+    - pydantic>=2.0.0
+    - pypdf2>=3.0.0
+    - python-docx>=1.0.0
+    - openpyxl>=3.1.0

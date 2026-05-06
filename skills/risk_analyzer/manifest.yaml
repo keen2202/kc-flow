@@ -1,0 +1,65 @@
+api_version: v2
+kind: Skill
+metadata:
+  name: risk_analyzer
+  version: 1.0.0
+  display_name: 风险分析器
+  description: 分析金融文档中的风险条款，基于LLM+规则引擎的混合分析方案
+  author: kc-flow-team
+  tags: [risk, finance, llm, analysis]
+  category: risk_analysis
+
+inputs:
+  type: object
+  properties:
+    document_content:
+      type: string
+      description: 待分析的文档文本内容
+    document_type:
+      type: string
+      enum: [PPM, LPA, SLA, NDA]
+      default: PPM
+    language:
+      type: string
+      enum: [zh-CN, en-US]
+      default: zh-CN
+    risk_threshold:
+      type: number
+      minimum: 0
+      maximum: 1
+      default: 0.7
+  required: [document_content]
+
+outputs:
+  type: object
+  properties:
+    risk_score:
+      type: number
+      minimum: 0
+      maximum: 1
+    risk_level:
+      type: string
+      enum: [low, medium, high, critical]
+    risk_items:
+      type: array
+      items:
+        type: object
+        properties:
+          clause_ref: {type: string}
+          risk_type: {type: string, enum: [legal, financial, operational, compliance]}
+          severity: {type: string, enum: [low, medium, high]}
+          description: {type: string}
+          recommendation: {type: string}
+    summary:
+      type: string
+
+runtime:
+  entry_point: handler.py::analyze
+  language: python
+  version: ">=3.11"
+  sandbox:
+    type: docker
+    memory_limit: 512MB
+    timeout_seconds: 300
+  dependencies:
+    - pydantic>=2.0.0
