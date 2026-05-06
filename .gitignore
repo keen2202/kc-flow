@@ -29,8 +29,8 @@ coverage.xml
 
 # Environment
 .env
-.env.local
-.env.production
+.env.*
+!.env.example
 
 # OS
 .DS_Store
@@ -43,6 +43,15 @@ docker-compose.override.yaml
 node_modules/
 frontend/dist/
 frontend/.env.local
+
+# Claude Code
+.claude/
+
+# Documentation (design docs, research reports — not needed in repo)
+docs/
+
+# Lock files
+package-lock.json
 
 # Migrations (auto-generated)
 # alembic/versions/*.py  # Uncomment if using auto-generated migrations
